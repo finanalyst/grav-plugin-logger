@@ -1,0 +1,30 @@
+name: Logger
+version: 0.1.0
+description: Provides a function to log events within another plugin. For use when developing.
+icon: plug
+author:
+  name: Richard N. Hainsworth
+  email: rnhainsworth@gmail.com
+homepage: https://github.com/finanalyst/grav-plugin-logger
+demo: http://demo.yoursite.com
+keywords: grav, plugin, etc
+bugs: https://github.com/finanalyst/grav-plugin-logger/issues
+docs: https://github.com/finanalyst/grav-plugin-logger/blob/develop/README.md
+license: MIT
+
+dependencies:
+    - data-manager
+
+form:
+  validation: strict
+  fields:
+    enabled:
+      type: toggle
+      label: Plugin status
+      highlight: 1
+      default: 0
+      options:
+        1: Enabled
+        0: Disabled
+      validate:
+        type: bool
