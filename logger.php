@@ -34,7 +34,7 @@ class LoggerPlugin extends Plugin
     }
 
     public function log($inp, $act = 'add', $logf = 'logfile') {
-        $path = DATA_DIR . 'logger' . DS . $logf . '-' . date('Y-m-d-\TH-i') . '.html';
+        $path = DATA_DIR . 'logger' . DS . $logf . '-' . date('Y-m-d-\TH-i--') . microtime(true) . '.html';
         $cloner = new VarCloner();
         $dumper = new HtmlDumper();
         $datafh = File::instance($path);

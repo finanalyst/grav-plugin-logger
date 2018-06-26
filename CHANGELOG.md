@@ -1,3 +1,8 @@
+# v0.1.1
+## 26 June 2017
+1. [](#enhancement)
+    * added microtime() to date stamp on file so the log() can be used in sequential lines.
+    
 # v0.1.0
 ##  06/25/2018
 

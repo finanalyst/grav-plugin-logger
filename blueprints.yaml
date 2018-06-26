@@ -1,5 +1,5 @@
 name: Logger
-version: 0.1.0
+version: 0.1.1
 description: Provides a function to log events within another plugin. For use when developing.
 icon: plug
 author:
