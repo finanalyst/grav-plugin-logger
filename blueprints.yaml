@@ -1,15 +1,14 @@
-name: Logger
+name: Var-Dumper
 version: 0.1.1
-description: Provides a function to log events within another plugin. For use when developing.
+description: Provides a function to dump variables to /user/data within another plugin. For use when developing.
 icon: plug
 author:
   name: Richard N. Hainsworth
   email: rnhainsworth@gmail.com
-homepage: https://github.com/finanalyst/grav-plugin-logger
-demo: http://demo.yoursite.com
-keywords: grav, plugin, etc
-bugs: https://github.com/finanalyst/grav-plugin-logger/issues
-docs: https://github.com/finanalyst/grav-plugin-logger/blob/develop/README.md
+homepage: https://github.com/finanalyst/grav-plugin-var-dumper
+keywords: grav, plugin, debugging, dumper
+bugs: https://github.com/finanalyst/grav-plugin-var-dumper/issues
+docs: https://github.com/finanalyst/grav-plugin-dumper/blob/develop/README.md
 license: MIT
 
 dependencies:

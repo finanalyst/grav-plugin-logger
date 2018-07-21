@@ -1,0 +1,21 @@
+<h1>
+    {{ config.plugins['data-manager'].types[type].list.title ?: type|capitalize|e ~ " " ~ "PLUGIN_DATA_MANAGER.ITEMS_LIST"|e|tu|raw }}
+</h1>
+
+{% for item in grav.twig.items %}
+    <div style="display: flex; margin-bottom: 5px;" >
+       <input type="checkbox" class="vd_toggle" data-index="{{loop.index}}" />
+       <div> {{ item.name }}</div>
+       <a href="{{ type }}/vdmpdelete_{{item.route}}" class="button" style="background-color: red; margin-left: 10px;">Delete</a>
+   </div>
+   <div id="vdmp{{ loop.index }}"  style="display: none;">
+        {{ item.content|raw }}
+    </div>
+{% endfor %}
+<script>
+    $().ready(function(){
+        $('.vd_toggle').click(function() {
+            $('#vdmp' + $(this).attr('data-index')).css('display',$(this).prop('checked')? 'inherit':'none');
+        });
+    });
+</script>
