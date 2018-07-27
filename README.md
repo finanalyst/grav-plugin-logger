@@ -39,27 +39,36 @@ Here is the default configuration and an explanation of available options:
 
 ```yaml
 enabled: false
+dumping: true
 ```
 >WARNING: This plugin should not be used for production, so the default is *false*.
+
+There are occasions when a developer needs to leave a dump code line in the program, but wishes to turn off dumping. If the plugin is simply disabled, by setting `enabled: false`, the remaining dump code will generate an error. Setting `dumping: false` has the same effect as `enabled: false` but does not generate a GRAV error.
+
+`dumping` has no effect if `enabled: false`.
 
 Note that if you use the admin plugin, a file with your configuration, and named var-dumper.yaml will be saved in the `user/config/plugins/` folder once the configuration is saved in the admin.
 
 ## Usage
 
-Add the following where you want to record a message or variable in log file:
+Add the following where you want to dump a message or variable in a file in the data directory:
 ```php
     $this->grav['dd']->dump('some message');
-    $this->grav['dd']->dump('another message', 'another-file');
-    $this->grav['dd']->dump($some-variable);
+    $this->grav['dd']->dump($some-variable, 'a comment');
 ```
 `dump` parameters:
 1. any php string or object
-1. the basename of the file to which the message is written. A timestamp is appended to the file basename. The file extension is `.html`.
+
+A timestamp is appended to the file basename. The file extension is `.yaml`.
 
 ## Viewing dump files
 
-Using the DataManger plugin, the files can be view by clicking on the type 'var-dumps'. All the dumps are then listed in the window.
+Using the DataManger plugin, the files can be view by clicking on the type 'var-dumps'. A dump file is generated for each day.
 
-Clicking on the checkbox opens the content of the dump.
+A button is provided to delete each item in the data directory.
 
-A button is provided to delete a dump.
+Clicking on a dump file opens the data.
+
+Each record contains the line & file where the dump was requested.
+
+Clicking on the checkbox opens the content of the variable dump.

@@ -1,0 +1,50 @@
+.vd_list {
+    
+}
+
+.vd_data_report {
+    button {
+        border-radius: 5px;
+        margin-left: 10px;
+        border: 2px solid transparent;
+        &:hover {
+            border: 2px solid rgb(144,122,58);
+        }
+        &#vd_open_all {
+            background-color: rgba(106,231,103,0.3);
+        }
+        &#vd_close_all {
+            background-color: rgba(252,143,143,0.5);
+        }
+    }
+    .vd_data_line {
+        margin-top: 10px;
+        input:disabled {
+            visibility: hidden;
+        }
+        .vd_file {
+            color: blue;
+            strong {
+                color: black;
+            }
+        }
+        .vd_time {
+            color: red;
+            strong {
+                color: black;
+            }
+        }
+        .vd_line {
+            color: green;
+            strong {
+                color: black;
+            }
+        }
+        .vd_comment  {
+            color: darkred;
+            strong {
+                color: black;
+            }
+        }
+    }
+}

@@ -1,0 +1,36 @@
+{% set data = grav.twig.itemData %}
+<div class="vd_data_report">
+    <button id="vd_open_all">Open All</button>
+    <button id="vd_close_all">Close All</button>
+    {% for item in data %}
+        <div class="vd_data_line">
+           <input type="checkbox" class="vd_toggle" data-index="{{loop.index}}"/>
+            <span class="vd_time"><strong>Dump at: </strong> {{item.time}} </span>
+            <span class="vd_file"> <strong> from file: </strong> {{item.file}} </span>
+            <span class="vd_line"><strong> at line: </strong> {{ item.line }} </span>
+            {% if item.comment %}<span class="vd_comment"><strong> comment: </strong> {{ item.comment }} </span>{% endif %}
+        </div>
+        <div id="vd_item{{ loop.index }}"  style="display: none;">
+            {{ item.html|raw }}
+        </div>
+    {% endfor %}
+</div>
+<script>
+    $().ready(function(){
+        $('.vd_toggle').click(function() {
+            $('#vd_item' + $(this).attr('data-index')).css('display',$(this).prop('checked')? 'inherit':'none');
+        });
+        $('#vd_open_all').click(function() {
+            $('.vd_toggle').each(function(){
+                $(this).prop('checked',true);
+                $('#vd_item' + $(this).attr('data-index')).css('display','inherit');
+            });
+        });
+        $('#vd_close_all').click(function() {
+            $('.vd_toggle').each(function(){
+                $(this).prop('checked',false);
+                $('#vd_item' + $(this).attr('data-index')).css('display','none');
+            });
+        });
+    });
+</script>

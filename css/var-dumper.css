@@ -1,0 +1,31 @@
+.vd_data_report button {
+  border-radius: 5px;
+  margin-left: 10px;
+  border: 2px solid transparent; }
+  .vd_data_report button:hover {
+    border: 2px solid #907a3a; }
+  .vd_data_report button#vd_open_all {
+    background-color: rgba(106, 231, 103, 0.3); }
+  .vd_data_report button#vd_close_all {
+    background-color: rgba(252, 143, 143, 0.5); }
+
+.vd_data_report .vd_data_line {
+  margin-top: 10px; }
+  .vd_data_report .vd_data_line input:disabled {
+    visibility: hidden; }
+  .vd_data_report .vd_data_line .vd_file {
+    color: blue; }
+    .vd_data_report .vd_data_line .vd_file strong {
+      color: black; }
+  .vd_data_report .vd_data_line .vd_time {
+    color: red; }
+    .vd_data_report .vd_data_line .vd_time strong {
+      color: black; }
+  .vd_data_report .vd_data_line .vd_line {
+    color: green; }
+    .vd_data_report .vd_data_line .vd_line strong {
+      color: black; }
+  .vd_data_report .vd_data_line .vd_comment {
+    color: darkred; }
+    .vd_data_report .vd_data_line .vd_comment strong {
+      color: black; }

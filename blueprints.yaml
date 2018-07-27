@@ -1,5 +1,5 @@
 name: Var-Dumper
-version: 0.1.1
+version: 0.2.0
 description: Provides a function to dump variables to /user/data within another plugin. For use when developing.
 icon: plug
 author:
@@ -15,15 +15,25 @@ dependencies:
     - data-manager
 
 form:
-  validation: strict
-  fields:
-    enabled:
-      type: toggle
-      label: Plugin status
-      highlight: 1
-      default: 0
-      options:
-        1: Enabled
-        0: Disabled
-      validate:
-        type: bool
+    validation: strict
+    fields:
+        enabled:
+            type: toggle
+            label: Plugin status
+            highlight: 1
+            default: 0
+            options:
+                1: Enabled
+                0: Disabled
+            validate:
+                type: bool
+        dumping:
+            type: toggle
+            label: Dumping
+            highlight: 1
+            default: 1
+            options:
+                1: Enabled
+                0: Disabled
+            validate:
+                type: bool

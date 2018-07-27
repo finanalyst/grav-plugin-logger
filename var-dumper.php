@@ -3,6 +3,7 @@ namespace Grav\Plugin;
 
 use Grav\Common\Plugin;
 use RocketTheme\Toolbox\File\File;
+use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 use Symfony\Component\VarDumper\Cloner\VarCloner;
 
@@ -14,6 +15,7 @@ class VarDumperPlugin extends Plugin
 {
     protected $dm = 'data-manager'; // because we are operating inside data manager page
     protected $dump_loc = 'var-dumps';
+    protected $logfile;
 
     public static function getSubscribedEvents()
     {
@@ -24,22 +26,23 @@ class VarDumperPlugin extends Plugin
 
     public function onPluginsInitialized()
     {
-        // Don't proceed if we are in the admin plugin
         if ($this->isAdmin()) {
             $this->enable( [
                 'onAdminTwigTemplatePaths' => ['onAdminTwigTemplatePaths', 0],
-                'onPagesInitialized' => ['onPagesInitialized', 100]
+                'onPagesInitialized' => ['onPagesInitialized', 0]
             ]);
             return;
         }
         $this->grav['dd'] = $this;
-
-        # verify data directory exists
+        $logf = 'dump_on_';
+        $this->logfile = File::instance(DATA_DIR . $this->dump_loc . DS . $logf . date('Y-m-d') . '.yaml');
+        # verify data directory exists with correct permissions
         if (!file_exists(DATA_DIR . $this->dump_loc )) {
             mkdir(DATA_DIR . $this->dump_loc , 0775, true);
         }
     }
 
+    // where the delete button is handled.
     public function onPagesInitialized() {
         $uri = $this->grav['uri'];
         if (strpos($uri->path(), $this->config->get('plugins.admin.route') . '/' . $this->dm . '/' . $this->dump_loc ) === false) {
@@ -50,7 +53,7 @@ class VarDumperPlugin extends Plugin
             && isset($pathParts[2]) && $pathParts[2] === $this->dump_loc
             && isset($pathParts[3]) ) {
             if (preg_match( '/^vdmpdelete_(.+)/', $pathParts[3], $match)) {
-                $file = DATA_DIR . $this->dump_loc . DS . $match[1] . '.html';
+                $file = DATA_DIR . $this->dump_loc . DS . $match[1];
                 if (file_exists( $file ) ) {
                     unlink($file);
                 }
@@ -61,15 +64,25 @@ class VarDumperPlugin extends Plugin
 
     public function onAdminTwigTemplatePaths($event)
     {
-        $event['paths'] = [__DIR__ . '/templates'];
+//        if ($this->config->get('plugins.var-dumper.dumping') )
+            $event['paths'] = [__DIR__ . '/templates'];
+            $this->grav['assets']->addCss('plugin://var-dumper/css/var-dumper.css');
     }
 
-    public function dump($inp, $act = 'add', $logf = 'dump_at_') {
-        $x = explode('.',microtime(true));
-        $path = DATA_DIR . $this->dump_loc . DS . $logf . '-' . date('Y-m-d-\TH-i-s-') . $x[1] . '.html';
+    public function dump($inp, $comment = '') {
+        $caller = array_shift(debug_backtrace(1));
+        $x = explode('.', microtime(true));
         $cloner = new VarCloner();
         $dumper = new HtmlDumper();
-        $datafh = File::instance($path);
-        $dumper->dump($cloner->cloneVar($inp), $path);
+        $output = fopen('php://memory', 'r+b');
+        $dumper->dump($cloner->cloneVar($inp), $output);
+        $output = [
+            'html' => stream_get_contents($output, -1, 0),
+            'time' => date('H-i-s-') . $x[1],
+            'comment' => $comment,
+            'line' => $caller['line'],
+            'file' => basename($caller['file'])
+        ];
+        $this->logfile->save($this->logfile->content() . Yaml::dump( [ $output ] ) );
     }
 }
